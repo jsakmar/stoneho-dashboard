@@ -28,9 +28,10 @@
   }
 
   .label {
-    font-size: 20px;
+    font-size: 24px;
+    color: #fff;
+    font-weight: 600;
     margin-bottom: 10px;
-    opacity: 0.8;
   }
 
   .value {
@@ -41,6 +42,13 @@
   .unit {
     font-size: 28px;
     margin-left: 4px;
+  }
+
+  .updated {
+    margin-top: 8px;
+    font-size: 13px;
+    opacity: 0.6;
+    text-align: center;
   }
 </style>
 </head>
@@ -56,6 +64,7 @@
   <div class="card">
     <div class="label">StoneHoUpper</div>
     <div class="value" id="upper">--</div>
+    <div class="updated" id="updated">--</div>
   </div>
 
   <div class="card">
@@ -107,14 +116,22 @@ async function load() {
   const ground = latest[MODULES.ground]
   const upper = latest[MODULES.upper]
 
+  // values
   setValue('ground', ground ? ground.temperature : null, '°C')
   setValue('upper', upper ? upper.temperature : null, '°C')
   setValue('humidity', ground ? ground.humidity : null, '%')
+
+  // last updated (fallback to ground if upper missing)
+  setUpdated(
+    upper && upper.time
+      ? upper.time
+      : ground && ground.time
+  )
 }
 
 function setValue(id, value, unit) {
   const el = document.getElementById(id)
-  if (!el) return   // 👈 prevents crash
+  if (!el) return
 
   if (value === undefined || value === null) {
     el.innerText = '--'
@@ -125,6 +142,26 @@ function setValue(id, value, unit) {
     ${Number(value).toFixed(1)}
     <span class="unit">${unit}</span>
   `
+}
+
+function setUpdated(ts) {
+  const el = document.getElementById('updated')
+  if (!el) return
+
+  if (!ts) {
+    el.innerText = '--'
+    return
+  }
+
+  el.innerText = `Last update ${formatTime(ts)}`
+}
+
+function formatTime(ts) {
+  const d = new Date(ts)
+  return d.toLocaleTimeString('sk-SK', {
+    hour: '2-digit',
+    minute: '2-digit'
+  })
 }
 </script>
 
