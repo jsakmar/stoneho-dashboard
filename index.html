@@ -47,6 +47,10 @@ body {
   font-size: clamp(22px, 3.6vw, 38px);
   font-weight: 600;
   line-height: 1;
+
+  display: flex;              /* 👈 important */
+  align-items: baseline;      /* 👈 aligns number + °C nicely */
+  justify-content: center;    /* 👈 keeps centered layout */
 }
 
 /* UNIT */
