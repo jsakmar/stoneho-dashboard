@@ -6,60 +6,80 @@
 <title>StoneHo Dashboard</title>
 
 <style>
-  body {
+body {
   margin: 0;
   background: #000;
   color: #fff;
   font-family: system-ui, -apple-system, sans-serif;
 }
 
-/* FULL WIDTH DASHBOARD */
+/* DASHBOARD STRIP */
 .grid {
   display: flex;
-  justify-content: space-between;   /* 👈 spread across */
-  align-items: flex-start;
-  padding: 40px 100px;               /* 👈 breathing room */
+  justify-content: space-between;
+  align-items: center;
+  height: 120px;
+  padding: 0 40px;
+  box-sizing: border-box;
 }
 
 /* cards */
 .card {
   text-align: center;
+  flex: 1;
+  white-space: nowrap; /* prevent breaking */
 }
 
-/* titles */
+/* 🔥 TITLES (fixed as requested) */
 .label {
-  font-size: 18px;
-  margin-bottom: 6px;
-  color: #fff;
+  font-size: 16px;
+  font-weight: 700;   /* 👈 bold */
+  color: #ffffff;     /* 👈 pure white */
+  margin-bottom: 2px;
 }
 
-/* values (smaller) */
+/* values */
 .value {
-  font-size: 48px;   /* 👈 reduced */
+  font-size: 36px;
   font-weight: 600;
+  line-height: 1;
 }
 
 /* units */
 .unit {
-  font-size: 16px;
-  margin-left: 4px;
+  font-size: 14px;
+  margin-left: 3px;
 }
 
 /* last update */
 .updated {
-  margin-top: 6px;
-  font-size: 12px;
-  color: #fff;
+  margin-top: 2px;
+  font-size: 10px;
+  color: #ffffff;     /* 👈 make readable */
   opacity: 0.75;
+}
 
+/* 📱 MOBILE (keep same layout, just scale down) */
 @media (max-width: 600px) {
   .grid {
-    flex-direction: column;
-    gap: 30px;
-    padding: 20px;
-    align-items: center;
+    padding: 0 10px;
   }
-}
+
+  .label {
+    font-size: 12px;
+  }
+
+  .value {
+    font-size: 26px;
+  }
+
+  .unit {
+    font-size: 11px;
+  }
+
+  .updated {
+    font-size: 9px;
+  }
 }
 </style>
 </head>
