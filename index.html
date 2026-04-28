@@ -1,15 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>StoneHo Dashboard</title>
+
+<style>
+  body {
+    margin: 0;
+    background: #000;
+    color: #fff;
+    font-family: system-ui, -apple-system, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .grid {
+    display: flex;
+    gap: 60px;
+    text-align: center;
+  }
+
+  .card {
+    min-width: 180px;
+  }
+
+  .label {
+    font-size: 20px;
+    margin-bottom: 10px;
+    opacity: 0.8;
+  }
+
+  .value {
+    font-size: 72px;
+    font-weight: 600;
+  }
+
+  .unit {
+    font-size: 28px;
+    margin-left: 4px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="grid">
+  <div class="card">
+    <div class="label">StoneHoGround</div>
+    <div class="value" id="ground">--</div>
+  </div>
+
+  <div class="card">
+    <div class="label">StoneHoUpper</div>
+    <div class="value" id="upper">--</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Humidity</div>
+    <div class="value" id="humidity">--</div>
+  </div>
+</div>
+
 <script type="module">
 import { createClient } from 'https://esm.sh/@supabase/supabase-js'
 
-const supabase = createClient(
-  'https://lkeyypslhuqzurpbpjwi.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxrZXl5cHNsaHVxenVycGJwandpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNDk1NzksImV4cCI6MjA5MTkyNTU3OX0.ZdmEQILv2qg2dTnkbRuMvcXTl5M-py5KvgINt9Modus'
-)
+const SUPABASE_URL = 'https://lkeyypslhuqzurpbpjwi.supabase.co'
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxrZXl5cHNsaHVxenVycGJwandpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNDk1NzksImV4cCI6MjA5MTkyNTU3OX0.ZdmEQILv2qg2dTnkbRuMvcXTl5M-py5KvgINt9Modus'
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
 const MODULES = {
   ground: 'StoneHoGround',
-  upper: 'StoneHoUpper',
+  upper: 'StoneHoUpper'
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+  load()
+  setInterval(load, 60000)
+})
 
 async function load() {
   const { data, error } = await supabase
@@ -20,7 +91,7 @@ async function load() {
     .limit(100)
 
   if (error) {
-    console.error(error)
+    console.error('Supabase error:', error)
     return
   }
 
@@ -36,14 +107,14 @@ async function load() {
   const ground = latest[MODULES.ground]
   const upper = latest[MODULES.upper]
 
-  // --- values ---
   setValue('ground', ground?.temperature, '°C')
   setValue('upper', upper?.temperature, '°C')
-  setValue('humidity', ground?.humidity, '%') // 👈 from ground
+  setValue('humidity', ground?.humidity, '%')
 }
 
 function setValue(id, value, unit) {
   const el = document.getElementById(id)
+  if (!el) return
 
   if (value === undefined || value === null) {
     el.innerText = '--'
@@ -55,8 +126,7 @@ function setValue(id, value, unit) {
     <span class="unit">${unit}</span>
   `
 }
-
-// load + refresh
-load()
-setInterval(load, 60000)
 </script>
+
+</body>
+</html>
