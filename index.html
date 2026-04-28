@@ -1,0 +1,62 @@
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js'
+
+const supabase = createClient(
+  'https://lkeyypslhuqzurpbpjwi.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxrZXl5cHNsaHVxenVycGJwandpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNDk1NzksImV4cCI6MjA5MTkyNTU3OX0.ZdmEQILv2qg2dTnkbRuMvcXTl5M-py5KvgINt9Modus'
+)
+
+const MODULES = {
+  ground: 'StoneHoGround',
+  upper: 'StoneHoUpper',
+}
+
+async function load() {
+  const { data, error } = await supabase
+    .from('netatmo_measurements')
+    .select('module_name, temperature, humidity, time')
+    .in('module_name', [MODULES.ground, MODULES.upper])
+    .order('time', { ascending: false })
+    .limit(100)
+
+  if (error) {
+    console.error(error)
+    return
+  }
+
+  const latest = {}
+
+  for (const row of data) {
+    const name = row.module_name || ''
+    if (!latest[name]) {
+      latest[name] = row
+    }
+  }
+
+  const ground = latest[MODULES.ground]
+  const upper = latest[MODULES.upper]
+
+  // --- values ---
+  setValue('ground', ground?.temperature, '°C')
+  setValue('upper', upper?.temperature, '°C')
+  setValue('humidity', ground?.humidity, '%') // 👈 from ground
+}
+
+function setValue(id, value, unit) {
+  const el = document.getElementById(id)
+
+  if (value === undefined || value === null) {
+    el.innerText = '--'
+    return
+  }
+
+  el.innerHTML = `
+    ${Number(value).toFixed(1)}
+    <span class="unit">${unit}</span>
+  `
+}
+
+// load + refresh
+load()
+setInterval(load, 60000)
+</script>
