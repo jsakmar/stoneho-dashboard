@@ -17,9 +17,9 @@ body {
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  align-items: start;              /* 👈 FIX title baseline */
+  align-items: start;
   height: 100px;
-  padding: 0 20px;                /* edge spacing */
+  padding: 5 15px;
   box-sizing: border-box;
 }
 
@@ -28,22 +28,22 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;    /* 👈 prevents vertical drift */
+  justify-content: flex-start;
   text-align: center;
   white-space: nowrap;
+
+  gap: 2px; /* 👈 consistent spacing */
 }
 
-/* TITLES (perfect alignment) */
+/* TITLES (fixed for mobile + desktop) */
 .label {
   font-size: clamp(11px, 1.4vw, 16px);
   font-weight: 700;
   color: #fff;
 
   margin: 0;
-  height: 18px;                  /* 👈 locks baseline */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  line-height: 1; /* 👈 key fix */
+  display: block;
 }
 
 /* VALUES */
@@ -53,19 +53,18 @@ body {
   line-height: 1;
 
   display: flex;
-  align-items: baseline;         /* 👈 aligns °C / % */
+  align-items: baseline;
   justify-content: center;
 }
 
 /* UNIT */
 .unit {
   font-size: clamp(9px, 1.3vw, 14px);
-  margin-left: 2px;              /* tight spacing */
+  margin-left: 2px;
 }
 
 /* LAST UPDATE */
 .updated {
-  margin-top: 2px;
   font-size: clamp(8px, 1vw, 11px);
   color: #fff;
   opacity: 0.8;
