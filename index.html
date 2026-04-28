@@ -107,14 +107,14 @@ async function load() {
   const ground = latest[MODULES.ground]
   const upper = latest[MODULES.upper]
 
-  setValue('ground', ground?.temperature, '°C')
-  setValue('upper', upper?.temperature, '°C')
-  setValue('humidity', ground?.humidity, '%')
+  setValue('ground', ground ? ground.temperature : null, '°C')
+  setValue('upper', upper ? upper.temperature : null, '°C')
+  setValue('humidity', ground ? ground.humidity : null, '%')
 }
 
 function setValue(id, value, unit) {
   const el = document.getElementById(id)
-  if (!el) return
+  if (!el) return   // 👈 prevents crash
 
   if (value === undefined || value === null) {
     el.innerText = '--'
