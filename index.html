@@ -18,52 +18,42 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
-  height: 120px;
-  padding: 0 20px;     /* tighter */
+  height: 100px;              /* 👈 changed */
+  padding: 0 20px;            /* slightly tighter */
   box-sizing: border-box;
 }
 
 /* cards */
 .card {
-  white-space: nowrap;
-}
-
-/* ALIGNMENT PER COLUMN */
-.card:nth-child(1) {
-  text-align: left;
-}
-.card:nth-child(2) {
   text-align: center;
-}
-.card:nth-child(3) {
-  text-align: right;
+  white-space: nowrap;
 }
 
 /* TITLES */
 .label {
-  font-size: 18px;
+  font-size: clamp(11px, 1.4vw, 16px);
   font-weight: 700;
   color: #fff;
-  margin-bottom: 2px;
+  margin-bottom: 1px;         /* tighter */
 }
 
 /* VALUES */
 .value {
-  font-size: 44px;      /* bigger but still fits */
+  font-size: clamp(22px, 3.6vw, 38px);  /* slightly reduced */
   font-weight: 600;
   line-height: 1;
 }
 
-/* UNIT (closer) */
+/* UNIT */
 .unit {
-  font-size: 16px;
-  margin-left: 2px;     /* 👈 tighter */
+  font-size: clamp(9px, 1.3vw, 14px);
+  margin-left: 2px;
 }
 
 /* LAST UPDATE */
 .updated {
-  margin-top: 2px;
-  font-size: 11px;
+  margin-top: 1px;            /* tighter */
+  font-size: clamp(8px, 1vw, 11px);
   color: #fff;
   opacity: 0.8;
 }
