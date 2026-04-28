@@ -15,66 +15,75 @@ body {
 
 /* DASHBOARD STRIP */
 .grid {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   height: 120px;
-  padding: 0 40px;
+  padding: 0 20px;     /* tighter */
   box-sizing: border-box;
 }
 
 /* cards */
 .card {
-  text-align: center;
-  flex: 1;
-  white-space: nowrap; /* prevent breaking */
+  white-space: nowrap;
 }
 
-/* 🔥 TITLES (fixed as requested) */
+/* ALIGNMENT PER COLUMN */
+.card:nth-child(1) {
+  text-align: left;
+}
+.card:nth-child(2) {
+  text-align: center;
+}
+.card:nth-child(3) {
+  text-align: right;
+}
+
+/* TITLES */
 .label {
-  font-size: 16px;
-  font-weight: 700;   /* 👈 bold */
-  color: #ffffff;     /* 👈 pure white */
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
   margin-bottom: 2px;
 }
 
-/* values */
+/* VALUES */
 .value {
-  font-size: 36px;
+  font-size: 44px;      /* bigger but still fits */
   font-weight: 600;
   line-height: 1;
 }
 
-/* units */
+/* UNIT (closer) */
 .unit {
-  font-size: 14px;
-  margin-left: 3px;
+  font-size: 16px;
+  margin-left: 2px;     /* 👈 tighter */
 }
 
-/* last update */
+/* LAST UPDATE */
 .updated {
   margin-top: 2px;
-  font-size: 10px;
-  color: #ffffff;     /* 👈 make readable */
-  opacity: 0.75;
+  font-size: 11px;
+  color: #fff;
+  opacity: 0.8;
 }
 
-/* 📱 MOBILE (keep same layout, just scale down) */
 @media (max-width: 600px) {
   .grid {
-    padding: 0 10px;
+    padding: 0 8px;
   }
 
   .label {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .value {
-    font-size: 26px;
+    font-size: 28px;
   }
 
   .unit {
-    font-size: 11px;
+    font-size: 12px;
+    margin-left: 1px;
   }
 
   .updated {
