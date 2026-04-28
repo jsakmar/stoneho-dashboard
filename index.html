@@ -17,9 +17,9 @@ body {
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
+  align-items: start;              /* 👈 FIX title baseline */
   height: 100px;
-  padding: 0 20px;              /* 👈 edge spacing desktop */
+  padding: 0 20px;                /* edge spacing */
   box-sizing: border-box;
 }
 
@@ -27,19 +27,23 @@ body {
 .card {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;          /* 👈 fixes vertical misalignment */
+  align-items: center;
+  justify-content: flex-start;    /* 👈 prevents vertical drift */
   text-align: center;
   white-space: nowrap;
 }
 
-/* TITLES */
+/* TITLES (perfect alignment) */
 .label {
   font-size: clamp(11px, 1.4vw, 16px);
   font-weight: 700;
   color: #fff;
-  margin: 0;                    /* 👈 remove uneven spacing */
-  line-height: 1.1;             /* 👈 consistent baseline */
+
+  margin: 0;
+  height: 18px;                  /* 👈 locks baseline */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* VALUES */
@@ -48,15 +52,15 @@ body {
   font-weight: 600;
   line-height: 1;
 
-  display: flex;              /* 👈 important */
-  align-items: baseline;      /* 👈 aligns number + °C nicely */
-  justify-content: center;    /* 👈 keeps centered layout */
+  display: flex;
+  align-items: baseline;         /* 👈 aligns °C / % */
+  justify-content: center;
 }
 
 /* UNIT */
 .unit {
   font-size: clamp(9px, 1.3vw, 14px);
-  margin-left: 2px;
+  margin-left: 2px;              /* tight spacing */
 }
 
 /* LAST UPDATE */
@@ -96,18 +100,18 @@ body {
 
 <div class="grid">
   <div class="card">
-    <div class="label">StoneHoGround</div>
+    <div class="label">StoneGround</div>
     <div class="value" id="ground">--</div>
   </div>
 
   <div class="card">
-    <div class="label">StoneHoUpper</div>
+    <div class="label">StoneUpper</div>
     <div class="value" id="upper">--</div>
     <div class="updated" id="updated">--</div>
   </div>
 
   <div class="card">
-    <div class="label">Humidity</div>
+    <div class="label">StoneHumidity</div>
     <div class="value" id="humidity">--</div>
   </div>
 </div>
